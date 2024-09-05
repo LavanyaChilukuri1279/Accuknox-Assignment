@@ -1,0 +1,75 @@
+{
+  "clusterName": "minikube",
+  "results": [
+    {
+      "controlID": "C-001",
+      "controlName": "Non-root containers",
+      "severity": "high",
+      "description": "Containers should not run as root to avoid privilege escalation risks.",
+      "resources": [
+        {
+          "namespace": "default",
+          "resource": "pod/nginx",
+          "container": "nginx",
+          "issue": "Container is running as root."
+        },
+        {
+          "namespace": "dev",
+          "resource": "pod/frontend",
+          "container": "frontend-app",
+          "issue": "Container is running as root."
+        }
+      ]
+    },
+    {
+      "controlID": "C-002",
+      "controlName": "Image Pull Policy",
+      "severity": "medium",
+      "description": "Ensure imagePullPolicy is set to 'Always' to prevent outdated images from being used.",
+      "resources": [
+        {
+          "namespace": "prod",
+          "resource": "deployment/backend",
+          "container": "backend-app",
+          "issue": "imagePullPolicy is not set to 'Always'."
+        }
+      ]
+    },
+    {
+      "controlID": "C-003",
+      "controlName": "Host Network",
+      "severity": "critical",
+      "description": "Containers should not share the host network to limit the attack surface.",
+      "resources": [
+        {
+          "namespace": "prod",
+          "resource": "pod/database",
+          "container": "postgresql",
+          "issue": "Pod is using the host network."
+        }
+      ]
+    },
+    {
+      "controlID": "C-004",
+      "controlName": "CPU/Memory Limits",
+      "severity": "low",
+      "description": "Setting resource limits is essential to prevent resource exhaustion.",
+      "resources": [
+        {
+          "namespace": "default",
+          "resource": "deployment/web-app",
+          "container": "web-app-container",
+          "issue": "CPU/Memory limits not set."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalControls": 4,
+    "totalFindings": 5,
+    "highSeverity": 1,
+    "mediumSeverity": 1,
+    "lowSeverity": 1,
+    "criticalSeverity": 1
+  }
+}
